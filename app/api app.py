@@ -4,7 +4,8 @@ app = Flask(__name__)
 
 
 #Register blueprint
-app.register_blueprint(book_ro, url_prefix="/books")
+app.register_blueprint(book_ro)
+
 #Run
 if __name__ == "__main__":
-    app.run(port=3000)
+    app.run(port=3000, debug=True)
