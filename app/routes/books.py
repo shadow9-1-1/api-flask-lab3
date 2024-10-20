@@ -17,6 +17,14 @@ def before_request():
 def get_books():
     return jsonify(books)
 
+#Get by id/books
+@book_ro.route("/books/<int:id>", methods=["GET"])
+def get_book(id):
+    book = next((b for b in books if b["id"] == id), None)
+    if book is None:
+        return jsonify({"error": "Book not found"}), 404
+    return jsonify(book)
+
 #Post /books
 @book_ro.route("/books", methods=["POST"])
 def create_book():
