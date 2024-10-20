@@ -1,0 +1,117 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Books API
+  description: This is a simple Bookstore API
+host: 127.0.0.1:3000
+schemes:
+  - http
+basePath: /
+paths:
+  /books:
+    get:
+      summary: Get All Books
+      description: Fetches all books
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+      security:
+        - bearerAuth: []
+    post:
+      summary: Create a new Book
+      description: Adds a new book to the collection
+      parameters:
+        - in: body
+          name: body
+          description: Book object to be added
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '201':
+          description: Created
+      security:
+        - bearerAuth: []
+  /books/{id}:
+    get:
+      summary: Get Book by ID
+      description: Fetch a book by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Book ID
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Book'
+        '404':
+          description: Not Found
+      security:
+        - bearerAuth: []
+    put:
+      summary: Update Book
+      description: Updates the details of a specific book
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Book ID
+        - in: body
+          name: body
+          description: Book object with updated data
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Not Found
+      security:
+        - bearerAuth: []
+    delete:
+      summary: Delete Book
+      description: Removes a book by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Book ID
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      security:
+        - bearerAuth: []
+definitions:
+  Book:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      title:
+        type: string
+        example: Book Title
+      price:
+        type: number
+        example: 19.99
+      quantity:
+        type: integer
+        example: 50
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Enter 'Bearer' followed by your token
